@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: redisio
-# Recipe:: install
+# Recipe:: package
 #
 # Copyright 2013, Brian Bianco <brian.bianco@gmail.com>
 #
@@ -16,4 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "redisio::#{redis['install_from']}"
+pkg = value_for_platform( [:ubuntu, :debian] => {:default => "redis-server"},
+                       [:centos, :redhat] => {:default => "redis"},
+                       :default => "redis")
+package pkg

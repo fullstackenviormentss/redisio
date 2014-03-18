@@ -34,6 +34,8 @@ end
 # Install related attributes
 default['redisio']['safe_install'] = true
 default['redisio']['bypass_setup'] = false
+# Installation type (source or package)
+default['redisio']['install_from'] = 'source'
 
 # Tarball and download related defaults
 default['redisio']['mirror'] = "http://download.redis.io/releases/"
@@ -115,4 +117,3 @@ default['redisio']['default_settings'] = {
 
 # The default for this is set inside of the "install" recipe. This is due to the way deep merge handles arrays
 default['redisio']['servers'] = nil
-

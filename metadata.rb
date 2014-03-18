@@ -10,6 +10,8 @@ version          '2.1.1'
 end
 
 recipe "redisio::default", "This recipe is used to install the prequisites for building and installing redis, as well as provides the LWRPs"
+recipe "redisio::package", "This recipe is used to install redis from a package"
+recipe "redisio::source", "This recipe is used to install redis from source"
 recipe "redisio::install", "This recipe is used to install redis"
 recipe "redisio::configure", "This recipe is used to configure redis by creating the configuration files and init scripts"
 recipe "redisio::sentinel", "This recipe is used to configure redis sentinels by creating the configuration files and init scripts"

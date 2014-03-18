@@ -38,13 +38,13 @@ The most common use case for the redisio cookbook is to use the default recipe, 
 
 Another common use case is to use the default, and then call the service resources created by it from another cookbook.  
 
-It is important to note that changing the configuration options of redis does not make them take effect on the next chef run.  Due to how redis works, you cannot reload a configuration without restarting the redis service.  Redis does not offer a reload option, in order to have new options be used redis must be stopped and started. 
+It is important to note that changing the configuration options of redis does not make them take effect on the next chef run.  Due to how redis works, you cannot reload a configuration without restarting the redis service.  Redis does not offer a reload option, in order to have new options be used redis must be stopped and started.
 
 You should make sure to set the ulimit for the user you want to run redis as to be higher than the max connections you allow.
 
 The disable recipe just stops redis and removes it from run levels.
 
-The cookbook also contains a recipe to allow for the installation of the redis ruby gem. 
+The cookbook also contains a recipe to allow for the installation of the redis ruby gem.
 
 Recipes
 -------
@@ -164,13 +164,13 @@ LWRP Examples
 Instead of using my provided recipes, you can simply depend on the redisio cookbook in your metadata and use the LWRP's yourself.  I will show a few examples of ways to use the LWRPS, detailed breakdown of options are below
 in the resources/providers section
 
-install resource
+source install resource
 ----------------
 
 It is important to note that this call has certain expectations for example, it expects the redis package to be in the format `redis-VERSION.tar.gz'.
 
 ```ruby
-redisio_install "redis-installation" do
+redisio_source_install "redis-installation" do
   version '2.6.9'
   download_url 'http://redis.googlecode.com/files/redis-2.6.9.tar.gz'
   safe_install false
@@ -228,6 +228,7 @@ Configuration options, each option corresponds to the same-named configuration o
 * `redisio['base_piddir'] - This is the directory that redis pidfile directories and pidfiles will be placed in.  Since redis can run as non root, it needs to have proper
                            permissions to the directory to create its pid.  Since each instance can run as a different user, these directories will all be nested inside this base one.
 * `redisio['bypass_setup'] - This attribute allows users to prevent the default recipe from calling the install and configure recipes.
+* `redisio['install_from'] - This attribute allows users to install redis from an OS package  (source or package).  Defaults to source.
 * `redisio['job_control'] - This deteremines what job control type will be used.  Currently supports 'initd' or 'upstart' options.  Defaults to 'initd'.
 
 Default settings is a hash of default settings to be applied to to ALL instances.  These can be overridden for each individual server in the servers attribute.  If you are going to set logfile to a specific file, make sure to set syslog-enabled to no.
@@ -239,7 +240,7 @@ Available options and their defaults
 ```
 'user'                   => 'redis' - the user to own the redis datadir, redis will also run under this user
 'group'                  => 'redis' - the group to own the redis datadir
-'homedir'                => Home directory of the user. Varies on distribution, check attributes file 
+'homedir'                => Home directory of the user. Varies on distribution, check attributes file
 'shell'                  => Users shell. Varies on distribution, check attributes file
 'systemuser'             => true - Sets up the instances user as a system user
 'ulimit'                 => 0 - 0 is a special value causing the ulimit to be maxconnections +32.  Set to nil or false to disable setting ulimits
@@ -256,7 +257,7 @@ Available options and their defaults
 'logfile'                => nil,
 'syslogenabled'         => 'yes',
 'syslogfacility         => 'local0',
-'save'                   => nil, - This attribute is nil but defaults to ['900 1','300 10','60 10000'], if you want to disable saving use an empty string 
+'save'                   => nil, - This attribute is nil but defaults to ['900 1','300 10','60 10000'], if you want to disable saving use an empty string
 'slaveof'                => nil,
 'masterauth'             => nil,
 'slaveservestaledata'    => 'yes',
@@ -379,4 +380,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
